@@ -1,2 +1,2 @@
 web: vendor/bin/heroku-php-apache2 public/
-scheduler: php -d memory_limit=512M artisan schedule:daemon
+worker: bash -c "while [ true ]; do (php artisan schedule:run &); sleep 60; done"
