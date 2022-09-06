@@ -20,7 +20,7 @@ class PlentymarketController extends Controller
 
     public function index(){
 
-        info('Some helpful information!');
+        echo "index";
     }
 
     public function updatePriceAndStock()
@@ -65,7 +65,7 @@ class PlentymarketController extends Controller
             //update variation in PM
             $b=$this->_plentymarketRepository->updateStock($data,$array['access_token']);
         
-            echo 'Variation '.$data['variationId'].' price and stock update completed successfully';
+            echo 'Variation '.$data['variationId'].' price and stock update completed successfully'.'<br/>';
         }
     }
 }
