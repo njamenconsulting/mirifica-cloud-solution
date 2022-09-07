@@ -52,7 +52,7 @@ Class PlentymarketRepository
     
     public function updateSalePrice($data,$token){
 
-        $priceGross = $data['priceTrenz']*0.19;
+        $priceGross = $data['priceTrenz']+$data['priceTrenz']*0.19;#Trenz gives price 
 
         $certificate_location = public_path('certs/cacert.pem');
         $curl = curl_init();
