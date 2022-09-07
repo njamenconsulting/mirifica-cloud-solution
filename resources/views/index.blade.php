@@ -14,17 +14,18 @@
                 <h1 class="display-4 fw-bold lh-1 mb-3">Grow up our business 
                 <i class="bi bi-graph-up-arrow"></i>
                 </h1>
-                <p class="col-lg-10 fs-4"> mirifica-cloud-solution app is a mirifica platform that allow to retrieve products catalog (product data) from different suppliers:
+                <p class="col-lg-10 fs-4"> <em>mirifica-cloud-solution</em> app is a mirifica platform that allow to retrieve products catalog (product data) from different suppliers:
 
-                    <ol class="list-group list-group-numbered">
-                    <li class="list-group-item">Arrow</li>
-                    <li class="list-group-item">Digi-Key</li>
-                    <li class="list-group-item">Element14</li>
-                    <li class="list-group-item">Mouser</li>
-                    <li class="list-group-item">Trenz</li>
-                </ol>
+                    <ol class="list-group list-group-numbered mb-2">
+                        <li class="list-group-item">Arrow</li>
+                        <li class="list-group-item">Digi-Key</li>
+                        <li class="list-group-item">Element14</li>
+                        <li class="list-group-item">Mouser</li>
+                        <li class="list-group-item">Trenz</li>
+                    </ol>
                 And update the articles on our webshop automatically. 
-                </p>  
+                </p>
+                <p class="col-lg-10 fs-4">  And update the articles on our webshop automatically.</p>
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
                 <form class="p-4 p-md-5 border rounded-3 bg-light">
