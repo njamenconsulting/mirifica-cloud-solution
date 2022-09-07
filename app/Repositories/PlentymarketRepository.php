@@ -51,7 +51,9 @@ Class PlentymarketRepository
       }
     
     public function updateSalePrice($data,$token){
-    
+
+        $priceGross = $data['priceTrenz']*0.19;
+
         $certificate_location = public_path('certs/cacert.pem');
         $curl = curl_init();
  
@@ -65,7 +67,7 @@ Class PlentymarketRepository
           CURLOPT_SSL_VERIFYPEER=> $certificate_location,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "PUT",
-          CURLOPT_POSTFIELDS => "[\n\t{\n\t\t\"variationId\": ".$data['variationId'].",\n\t\t\"salesPriceId\": ".$data['salePriceId']. ",\n\t\t\"price\": ".$data['priceTrenz']. "\n  }\n]\n",
+          CURLOPT_POSTFIELDS => "[\n\t{\n\t\t\"variationId\": ".$data['variationId'].",\n\t\t\"salesPriceId\": ".$data['salePriceId']. ",\n\t\t\"price\": ".$priceGross. "\n  }\n]\n",
           CURLOPT_COOKIE => "plentyID=eyJpdiI6Im9PSzBQQ2R0c0g2ZFB6ckxiVVBxQVE9PSIsInZhbHVlIjoiQUluWTl3ZkNFV2RiV2dvZ0lzTWpOMWN6cDRuUUdMMTdiS2dmN2Y0WTJVZkd1XC9GcU5VV3crRHJcL1k4TzZVOEJnIiwibWFjIjoiODkwNjQ0NTFjYTM1MWZlMzQ3NzkzNTAxNjMxMTdkYTlmNTUxMmExMWU4NTcyNDE1NGI4Y2ZkYzkwMjkxZGY0OCJ9",
           CURLOPT_HTTPHEADER => [
             "Authorization: Bearer ".$token,

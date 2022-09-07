@@ -23,7 +23,6 @@
                         <li class="list-group-item">Mouser</li>
                         <li class="list-group-item">Trenz</li>
                     </ol>
-                And update the articles on our webshop automatically. 
                 </p>
                 <p class="col-lg-10 fs-4">  And update the articles on our webshop automatically.</p>
             </div>
