@@ -45,6 +45,7 @@ Route::controller(PlentymarketController::class)->group(function () {
 Route::controller(TrenzController::class)->group(function () {
     Route::get('trenz', 'index');
     Route::get('trenz/getAll', 'getAllArticles');
+    Route::get('trenz/add_articles', 'addArticles');
     Route::post('trenz/keywordSearch', 'postFormKeywordSearch');
 });
 

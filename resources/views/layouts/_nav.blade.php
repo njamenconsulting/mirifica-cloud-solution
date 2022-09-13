@@ -64,6 +64,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuTrenz">
                <li><a class="dropdown-item" href="{{ url('trenz')}}">Helps</a></li>
+               <li><a class="dropdown-item" href="{{ url('trenz/add_articles')}}">Add articles</a></li>
                <li><a class="dropdown-item" href="{{ url('trenz/getAll')}}">Articles</a></li>
             </ul>
          </li>

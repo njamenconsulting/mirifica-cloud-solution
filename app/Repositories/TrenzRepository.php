@@ -19,7 +19,26 @@ Class TrenzRepository
                           'Authorization: Basic bWlyaWZpY2EtYXBpOnAwcGRzQ3FHV1FEblJlRXk4NUtuSzh5Q0NBd1JRcEVobjZuTlNDb20='
                          ];
     }
-    
+    //
+    public function getAllArticle()
+    {
+
+        $method = "GET";
+
+        $url = self::BASE_URL."articles/?language=2";
+
+        $fields = [
+          'filter' => [
+            ['property'=>'active','value'=> 1],
+
+            ]
+      ];
+      //['property'=>'limit','value'=> 500],
+      //['property'=>'start','value'=> 1]
+        $article = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+
+        return $article;                                                                                  
+    }   
     //
     public function getArticle($articleId)
     {

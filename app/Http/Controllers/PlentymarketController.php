@@ -25,6 +25,15 @@ class PlentymarketController extends Controller
     } 
 
     public function index(){
+        $articles = DB::select('select * from trenzs');
+       
+        for ($i=0; $i  < count($articles) ; $i++) { 
+            
+            #Insert the particles id into trenzs table 
+            $query = DB::insert('insert into plentymarkets (itemId, variationId, externalId, price, priceGross, stock)
+            values (?, ?, ?, ?, ?, ?)', ['NaN', 'NaN',$articles[$i]->productId ,'NaN','NaN','NaN']);
+        } 
+dd($query);
         return view('plentymarkets.index');
     }
 
