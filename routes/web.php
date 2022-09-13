@@ -8,6 +8,7 @@ use App\Http\Controllers\MouserController;
 use App\Http\Controllers\Element14Controller;
 use App\Http\Controllers\TrenzController;
 use App\Http\Controllers\PlentymarketController;
+use App\Http\Controllers\UpdatingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,11 +39,17 @@ Route::controller(Element14Controller::class)->group(function () {
 
 Route::controller(PlentymarketController::class)->group(function () {
     Route::get('plentymarket', 'index');
-    Route::get('plentymarket/checking', 'updatePriceAndStock');
+    Route::get('plentymarket/checking', 'updateDb');
 });
 
 Route::controller(TrenzController::class)->group(function () {
     Route::get('trenz', 'index');
     Route::get('trenz/getAll', 'getAllArticles');
     Route::post('trenz/keywordSearch', 'postFormKeywordSearch');
+});
+
+Route::controller(UpdatingController::class)->group(function () {
+    Route::get('updating', 'index');
+    Route::get('updating/price', 'updateVariationPrice');
+    Route::post('updating/stock', 'updateVariationStock');
 });

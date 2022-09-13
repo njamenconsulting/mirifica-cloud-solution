@@ -52,7 +52,8 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuPM">
                <li><a class="dropdown-item" href="{{ url('plentymarket')}}">Helps</a></li>
-               <li><a class="dropdown-item" href="{{ url('plentymarket/checking')}}">Checking</a></li>
+               <li><a class="dropdown-item" href="{{ url('plentymarket/checking')}}">Report</a></li>
+               <li><a class="dropdown-item" href="{{ url('plentymarket/checking')}}">Updating</a></li>
             </ul>
          </li>
       </ul>
