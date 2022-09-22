@@ -1,5 +1,5 @@
-<div class="container-fluid">
-   <nav class="navbar bg-light">
+
+  
       <div class="container">
          <a class="navbar-brand" href="#">
          <img src="{{ asset('assets/img/mirifica.png')}}" alt="mirifica srl" width="100" height="30">
@@ -9,7 +9,7 @@
    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
    </button>
-   <div class="collapse navbar-collapse" id="navbarCollapse">
+   <div class="collapse navbar-collapse mx-2" id="navbarCollapse">
       <ul class="navbar-nav ms-auto mb-2 mb-md-0">
          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ url('/')}}">Home</a>
@@ -52,8 +52,8 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuPM">
                <li><a class="dropdown-item" href="{{ url('plentymarket')}}">Helps</a></li>
-               <li><a class="dropdown-item" href="{{ url('plentymarket/checking')}}">Report</a></li>
-               <li><a class="dropdown-item" href="{{ url('plentymarket/checking')}}">Updating</a></li>
+               <li><a class="dropdown-item" href="{{ url('plentymarket/getReport')}}">Report</a></li>
+               <li><a class="dropdown-item" href="{{url('plentymarket/updateOrCreateArticle')}}">update</a></li>
             </ul>
          </li>
       </ul>
@@ -63,11 +63,19 @@
                Trenz
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuTrenz">
-               <li><a class="dropdown-item" href="{{ url('trenz')}}">Helps</a></li>
-               <li><a class="dropdown-item" href="{{ url('trenz/add_articles')}}">Add articles</a></li>
-               <li><a class="dropdown-item" href="{{ url('trenz/getAll')}}">Articles</a></li>
+               <li><a class="dropdown-item" href="{{ url('trenz')}}">Report</a></li>
+               <li><a class="dropdown-item" href="{{ url('trenz/create')}}">Update</a></li>
             </ul>
          </li>
       </ul>
+      <ul class="navbar-nav ms-auto">
+			<li class="nav-item"><a class="nav-link" href="#"> Menu item </a></li>
+			<li class="nav-item dropdown">
+				<a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Dropdown right </a>
+			    <ul class="dropdown-menu dropdown-menu-end">
+				  <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
+				  <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
+			    </ul>
+			</li>
+		</ul>
     </div>
-</div>

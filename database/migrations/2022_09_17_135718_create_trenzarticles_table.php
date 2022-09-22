@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrenzsTable extends Migration
+class CreateTrenzarticlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTrenzsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trenzs', function (Blueprint $table) {
+        Schema::create('trenzarticles', function (Blueprint $table) {
             $table->id();
             $table->string('productId');
             $table->string('price');
@@ -29,6 +29,6 @@ class CreateTrenzsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trenzs');
+        Schema::dropIfExists('trenzarticles');
     }
 }

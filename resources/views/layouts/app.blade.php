@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Mirifica Cloud">
+        <meta name="description" content="Mirifica Cloud solution">
         <meta name="author" content="mirifica-de - yves njamen">
         
 
@@ -13,63 +13,29 @@
         <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-            <style>
-            body {
-                min-height: 75rem;
-                padding-top: 4.5rem;
-            }
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
 
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+        <style type="text/css">
+            .navbar .megamenu{ padding: 1rem; }
+            /* ============ desktop view ============ */
+            @media all and (min-width: 992px) {
+                
+                .navbar .has-megamenu{position:static!important;}
+                .navbar .megamenu{left:0; right:0; width:100%; margin-top:0;  }
+                
+            }	
+            /* ============ desktop view .end// ============ */
+
+
+            /* ============ mobile view ============ */
+            @media(max-width: 991px){
+                .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+                    overflow-y: auto;
+                    max-height: 90vh;
+                    margin-top:10px;
                 }
             }
-
-            .b-example-divider {
-                height: 3rem;
-                background-color: rgba(0, 0, 0, .1);
-                border: solid rgba(0, 0, 0, .15);
-                border-width: 1px 0;
-                box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-            }
-
-            .b-example-vr {
-                flex-shrink: 0;
-                width: 1.5rem;
-                height: 100vh;
-            }
-
-            .bi {
-                vertical-align: -.125em;
-                fill: currentColor;
-            }
-
-            .nav-scroller {
-                position: relative;
-                z-index: 2;
-                height: 2.75rem;
-                overflow-y: hidden;
-            }
-
-            .nav-scroller .nav {
-                display: flex;
-                flex-wrap: nowrap;
-                padding-bottom: 1rem;
-                margin-top: -1px;
-                overflow-x: auto;
-                text-align: center;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-            </style>
-
+            /* ============ mobile view .end// ============ */
+        </style>
             
             <!-- Custom styles for this template -->
             <link href="#" rel="stylesheet">
@@ -77,7 +43,7 @@
     <body>
             
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-           @include('layouts._nav')
+           @include('layouts._topnav')
         </nav>
 
         <main class="container">
@@ -92,7 +58,17 @@
 
 
         <script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>
-
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function(){
+                /////// Prevent closing from click inside dropdown
+                document.querySelectorAll('.dropdown-menu').forEach(function(element){
+                    element.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                    });
+                })
+            }); 
+            // DOMContentLoaded  end
+        </script>
             
     </body>
 </html>

@@ -11,10 +11,10 @@
     <div class="container col-xl-10 col-xxl-8 px-4 py-2">
         <div class="row align-items-center g-lg-5 py-5">
             <div class="col-lg-7 text-center text-lg-start">
-                <h1 class="display-4 fw-bold lh-1 mb-3">Grow up our business 
-                <i class="bi bi-graph-up-arrow"></i>
+                <h1 class="display-4 fw-bold lh-1 mb-3">Business Process Automation 
+                <i class="bi bi-repeat"></i>
                 </h1>
-                <p class="col-lg-10 fs-4"> <em>mirifica-cloud-solution</em> app is a mirifica platform that allow to retrieve products catalog (product data) from different suppliers:
+                <p class="col-lg-10 fs-4"> <em>Mirifica cloud solution</em>is a platform that allow automatically feed online stores from the catalogs of following suppliers:
 
                     <ol class="list-group list-group-numbered mb-2">
                         <li class="list-group-item">Arrow</li>
@@ -24,7 +24,7 @@
                         <li class="list-group-item">Trenz</li>
                     </ol>
                 </p>
-                <p class="col-lg-10 fs-4">  And update the articles on our webshop automatically.</p>
+
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
                 <form class="p-4 p-md-5 border rounded-3 bg-light">

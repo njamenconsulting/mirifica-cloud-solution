@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Api\Trenz;
 
 use App\Services\CurlService;
 //use App\Services\TokenService;
 use Illuminate\Support\Facades\Http;
 
-Class TrenzRepository
+Class TrenzApiArticleRepository
 {
     const BASE_URL ="https://shop.trenz-electronic.de/api/";
     private $_header;
@@ -20,21 +20,21 @@ Class TrenzRepository
                          ];
     }
     //
-    public function getAllArticle()
+    public function getAllArticle($offset)
     {
 
         $method = "GET";
 
-        $url = self::BASE_URL."articles/?language=2";
+        //$url = self::BASE_URL."articles?lim=1001&language=2";
+        $url = self::BASE_URL."articles?start=".$offset."&language=2";
 
         $fields = [
-          'filter' => [
-            ['property'=>'active','value'=> 1],
-
-            ]
-      ];
-      //['property'=>'limit','value'=> 500],
-      //['property'=>'start','value'=> 1]
+                    "filter" => [
+                                      "property" => "active", 
+                                      "value" => 1 
+                                    ] 
+        ];
+      //dd(json_encode($fields));
         $article = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
 
         return $article;                                                                                  

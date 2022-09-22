@@ -15,7 +15,7 @@ class CurlService
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_ENCODING, "");
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 300);
         curl_setopt($curl, CURLOPT_CAINFO, $certificate_path);
         //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);//This option tells cURL that it must verify the host name in the server cert
         //curl_setopt($curl, CURLOPT_VERIFYPEER, 0); //This option tells cURL to verify the authenticity of the SSL cert on the server.

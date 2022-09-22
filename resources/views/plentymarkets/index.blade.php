@@ -21,31 +21,32 @@
             <div class="container-md">
 
                 <h4 class="text-warning">Description</h4>
-                <p>These are the articles that have been updated; </p>
+                <p>These are the articles that have been updated; 
+                <button type="button" class="btn btn-primary">
+                Updating articles <span class="badge text-bg-warning">{{ count($variations['updating']) }}</span>
+                </button>
 
+                <button type="button" class="btn btn-primary">
+                New articles <span class="badge text-bg-warning"> {{ count($variations['adding']) }} </span>
+                </button>
+                </p>
                 <table class="table table-striped table-hover table-bordered border-warning">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"> Item ID </th>
-                            <th scope="col"> Variation ID </th>
                             <th scope="col"> Extenrnal ID </th>
                             <th scope="col"> Stock </th>
                             <th scope="col"> Price </th>
-                            <th scope="col"> Price Gross </th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($variations as $variation)
+                        @foreach ($variations['updating'] as $variation)
                         <tr>
-                            <th scope="row">{{ $loop->index }}</th>
-                            <td>{{$variation['itemId']}}</td>
-                            <td>{{$variation['variationId']}}</td>
-                            <td>{{$variation['externalId']}}</td>
-                            <td>{{$variation['stock']}}</td>
-                            <td>{{$variation['price']}}</td>
-                            <td>{{$variation['priceGross']}}</td>
+                            <th scope="row">{{ $loop->index+1 }}</th>
+                            <td>{{$variation -> productId }}</td>
+                            <td>{{$variation -> stock }}</td>
+                            <td>{{$variation -> price }}</td>
                         </tr>
                         @endforeach
                         
