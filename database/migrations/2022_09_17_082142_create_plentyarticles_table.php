@@ -17,10 +17,10 @@ class CreatePlentyarticlesTable extends Migration
             $table->id();
             $table->string('itemId');
             $table->string('variationId');
-            $table->string('externalId');
-            $table->string('price');
-            $table->string('priceGross');
-            $table->string('stock');
+            $table->string('externalId')->nullable();
+            $table->string('price')->nullable();
+            $table->string('priceGross')->nullable();
+            $table->string('stock')->nullable();
             $table->timestamps();
         });
     }

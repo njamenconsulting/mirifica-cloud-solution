@@ -73,8 +73,19 @@
 			<li class="nav-item dropdown">
 				<a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> PlentyMarket </a>
 			    <ul class="dropdown-menu dropdown-menu-end">
+				  <li><a class="dropdown-item" href="{{ route('plenty-articles.index')}}"><i class="bi bi-activity"></i> Index</a></li>
+				  <li><a class="dropdown-item" href="{{ route('plenty-articles.create')}}"><i class="bi bi-activity"></i> Create</a></li>
 				  <li><a class="dropdown-item" href="#"><i class="bi bi-activity"></i> History</a></li>
 				  <li><a class="dropdown-item" href="#"><i class="bi bi-cloud-plus"></i> Updating</a></li>
+			    </ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Trenz</a>
+			    <ul class="dropdown-menu dropdown-menu-end">
+				  <li><a class="dropdown-item" href="{{ route('trenz-articles.index')}}"><i class="bi bi-activity"></i> Index</a></li>
+				  <li><a class="dropdown-item" href="{{ route('trenz-articles.create')}}"><i class="bi bi-activity"></i> Create</a></li>
+				  <li><a class="dropdown-item" href="{{ route('trenz-articles.update')}}"><i class="bi bi-activity"></i> Update</a></li>
+				  <li><a class="dropdown-item" href="#"><i class="bi bi-cloud-plus"></i> Delete</a></li>
 			    </ul>
 			</li>
             <li class="nav-item dropdown">

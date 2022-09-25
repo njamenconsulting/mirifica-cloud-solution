@@ -4,55 +4,61 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Api\Trenz\TrenzApiArticleRepository;
-use App\Repositories\Sqlite\TrenzRepository;
+use App\Services\Trenz\TrenzApiService;
+use App\Models\Trenzarticle;
 use Illuminate\Support\Facades\DB;
 
-class TrenzArticleController extends Controller
+class TrenzarticleController extends Controller
 {
-    public $_trenzApiArticleRepository;
-    private $_trenzRepository;
+    public $_trenzApiService;
+    private $_trenzModel;
 
-    function __construct(TrenzApiArticleRepository $trenzArticle,TrenzRepository $trenzRepository)
+    function __construct(TrenzApiService $trenzApiService,Trenzarticle $trenzModel)
     {
-        $this -> _trenzApiArticleRepository = $trenzArticle;
-        $this -> _trenzRepository = $trenzRepository;
+        $this -> _trenzApiService = $trenzApiService;
+        $this -> _trenzModel = $trenzModel;
     }
-    //
+    /** 
+     * Display the Trenz dashboard
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        echo "report trenz process";
+        return view('trenzarticles.trenz_dashboard');
     }
+
     /**
-     * Retrieving articles from Trenz API 
-     *
+     * Retrieve articles from Trenz using API,and store it in trenzarticle table. INITIALISATION STEP
+     * 
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-   
-        $articles1 = $this -> _trenzApiArticleRepository->getAllArticle(0);
-
+        #retrieving all articles from Trenz
+        $articles1 = $this -> _trenzApiService->getAllArticle(0);
+        
         if($articles1['success'])
         {
-                    
+          #In the where the number product is sup to 1000, limit of Trenz         
           if( $articles1['total'] != count($articles1['data'])) 
           {
             $offset =  count($articles1['data'])+1;
 
-            $articles2 = $this -> _trenzApiArticleRepository->getAllArticle($offset);
+            $articles2 = $this -> _trenzApiService->getAllArticle($offset);
 
             if($articles2['success']){
-
+                
                 $articles['data'] =array_merge($articles1['data'],$articles2['data']);
 
-                $this-> store($articles);
+                $this-> store($articles['data']);
             }   
           }
           else          
-            $this-> store($articles);
+            $this-> store($articles['data']);
         }
 
+        return view("trenzarticles.trenz_dashboard");
     }
 
     /**
@@ -64,26 +70,54 @@ class TrenzArticleController extends Controller
     public function store($articles)
     {
         //ini_set('max_execution_time', 120);
-        foreach ($articles['data'] as $key => $value) {
+        foreach ($articles as $key => $value) {
            
             #Check if the article already exist in local bd sqlite
             $article = DB::select('select id from trenzarticles where productId= '.$value['id']); 
             
             if(!$article) 
             {
-                $article = $this->_trenzApiArticleRepository->getArticle($value['id']);
+                $article = $this->_trenzApiService->getArticle($value['id']);
              
                 #Insert the articles id into trenzarticles table 
                 $query = DB::insert('insert into trenzarticles (productId, price, stock)
                                         values (?, ?, ?)', [$value['id'], $article['data']['mainDetail']['prices'][0]['price'], $article['data']['mainDetail']['inStock']]);
-            }
-        
+            }  
     
         }
         
-        return view('trenz.trenz_index');
+        return view("trenzarticles.trenz_dashboard");
     }
-    public function update()
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Retrieve articles from Trenz using API,next compare with the entries of trenzarticle table
+     * if for a retrieved article, there is no mapping with a entrie of the table, the we should create new entrie
+     * if for a retrieved article, there is a mapping with the entries of the table, but at least one field value is different
+     * we should run update.
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
         //
     }

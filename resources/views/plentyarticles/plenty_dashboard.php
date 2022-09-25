@@ -21,27 +21,19 @@
             <div class="container-md">
 
                 <h4 class="text-warning">Description</h4>
-                <p>These are the articles that have been updated; 
-                <button type="button" class="btn btn-primary">
-                Updating articles <span class="badge text-bg-warning">{{ count($variations['updating']) }}</span>
-                </button>
 
-                <button type="button" class="btn btn-primary">
-                New articles <span class="badge text-bg-warning"> {{ count($variations['adding']) }} </span>
-                </button>
-                </p>
                 <table class="table table-striped table-hover table-bordered border-warning">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"> Extenrnal ID </th>
+                            <th scope="col"> External ID </th>
                             <th scope="col"> Stock </th>
                             <th scope="col"> Price </th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($variations['updating'] as $variation)
+                        @foreach ($variations as $variation)
                         <tr>
                             <th scope="row">{{ $loop->index+1 }}</th>
                             <td>{{$variation -> productId }}</td>

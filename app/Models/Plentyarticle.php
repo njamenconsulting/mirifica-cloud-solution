@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Plentyarticle extends Model
 {
     use HasFactory;
+
+    public function createVariation($array)
+    {
+        //
+    }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Api\Trenz;
+namespace App\Services\Trenz;
 
 use App\Services\CurlService;
-//use App\Services\TokenService;
+use App\Services\TokenService;
 use Illuminate\Support\Facades\Http;
 
-Class TrenzApiArticleRepository
+Class TrenzApiService
 {
     const BASE_URL ="https://shop.trenz-electronic.de/api/";
     private $_header;
@@ -69,6 +69,5 @@ Class TrenzApiArticleRepository
         return CurlService::makeHttpRequest($method, $url,$this-> _header,$fields);
 
       }
-
 
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Api\Plentymarket;
+namespace App\Services\Plentymarket;
 
 use App\Services\CurlService;
 use App\Services\TokenService;
 use Illuminate\Support\Facades\Http;
 
-Class PlentymarketApiArticleRepository
+Class PlentyApiService
 {
     private $_url;
     private $_vat;
@@ -29,7 +29,23 @@ Class PlentymarketApiArticleRepository
                           'Authorization: Bearer '.(new TokenService())->getAccessToken()
                          ];
     }
-    
+
+    public function getAllItems()
+    {
+        $url = $this->_url."/rest/items";
+        $method = "GET";      
+        $items = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+        
+        return $items;
+    }
+    public function getAllVariations(int $pageNumber)
+    {
+        $url = $this->_url."/rest/items/variations?page=".$pageNumber;
+        $method = "GET";      
+        $variations = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+        
+        return $variations;
+    }  
     /**
      * getExternalId
      *

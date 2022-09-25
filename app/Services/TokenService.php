@@ -91,13 +91,12 @@ class TokenService
      * @param  array $data which contains HTTP response issued by PM Authorization Server
      * @return boolean
      */
-    private function storeTokenInCache($data = array()):boolean
+    private function storeTokenInCache($data = array()):bool
     {
         $minutes = $data['expires_in']/60;
 
         return Cache::put('access_token', $data['access_token'], now()->addMinutes($minutes));
-        //Cache::put('token', $data['access_token'],$data['expires_in']);
-  
+        //Cache::put('token', $data['access_token'],$data['expires_in']);  
     }
 
 }

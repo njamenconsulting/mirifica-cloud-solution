@@ -1,19 +1,15 @@
-<!-- resources/views/index.blade.php -->
  
 @extends('layouts.app')
 
-
-    @section('title', 'Mouser')
-    
+    @section('title', 'Trenz')
     
     @section('content')
 
-
         <div class="bg-light m-2 p-2">
-            <h2 class="p-2 text-muted"> Mouser API</h2>
+            <h2 class="p-2 text-muted"> Trenz API</h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Mouser</a></li>
+                    <li class="breadcrumb-item"><a href="#">Trenz</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Home</li>
                 </ol>
             </nav>
@@ -21,7 +17,7 @@
             <div class="container-md">
 
                 <h4 class="text-warning">Description</h4>
-                <p>The Search API service allows us to utilise Mouser's product data, availability, and pricing in our applications.</p>
+                <p>The Search API service allows us to utilise Trenz's product data, availability, and pricing in our applications.</p>
                 
                 <ul>
                     <li>Search by Keyword Method</li>
