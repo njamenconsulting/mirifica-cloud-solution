@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Services\Plentymarket;
+namespace App\Http\Controllers\Articles;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Services\CurlService;
 use App\Services\TokenService;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
-Class PlentyApiService
+class PlentySystemController extends Controller
 {
     private $_url;
     private $_vat;
@@ -72,26 +74,33 @@ Class PlentyApiService
      */
     public function updateSalePrice():array
     {
-        $variations = DB::select('select * from plentyarticles where externalId !=NULL'); 
-dd($variations);
-        # price Gross calculation by adding VAT of 19%
-        $priceGross = $data['price'] + $data['price'] * $this->_vat;
+        $variations = DB::select('select * from plentyarticles where externalId IS NOT NULL'); 
 
-        $url = $this->_url."/rest/items/variations/variation_sales_prices";
+        foreach ($variations as $key => $value) {
+            # price Gross calculation by adding VAT of 19%
+            if(is_numeric($value->price))
+            {            
+                $priceGross = $value->price + $value->price * $this->_vat;
 
-        $fields = [
-              [
-                'variationId' => $data['variationId'],
-                'salesPriceId' => $data['salePriceId'],
-                'price' => $priceGross
-              ]
-        ];
+                $url = $this->_url."/rest/items/variations/variation_sales_prices";
+
+                $fields = [
+                    [
+                        'variationId' => $value->variationId,
+                        'salesPriceId' => 1,
+                        'price' => $priceGross
+                    ]
+                ];
+                
+                $method = "PUT";
         
-        $method = "PUT";
+                $update = CurlService::makeHttpRequest($method, $url, $this-> _header,$fields); 
+            }
 
-        $update = CurlService::makeHttpRequest($method, $url, $this-> _header,$fields);  
+        }
+        dd($update);
+        return $update; 
 
-        return $update;   
     }
 
      

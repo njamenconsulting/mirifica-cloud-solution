@@ -21,6 +21,7 @@ class CreatePlentyarticlesTable extends Migration
             $table->string('price')->nullable();
             $table->string('priceGross')->nullable();
             $table->string('stock')->nullable();
+            $table->string('warehouseVariationId')->nullable();
             $table->timestamps();
         });
     }

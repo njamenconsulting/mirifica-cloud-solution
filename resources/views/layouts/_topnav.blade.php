@@ -75,8 +75,9 @@
 			    <ul class="dropdown-menu dropdown-menu-end">
 				  <li><a class="dropdown-item" href="{{ route('plenty-articles.index')}}"><i class="bi bi-activity"></i> Index</a></li>
 				  <li><a class="dropdown-item" href="{{ route('plenty-articles.create')}}"><i class="bi bi-activity"></i> Create</a></li>
-				  <li><a class="dropdown-item" href="#"><i class="bi bi-activity"></i> History</a></li>
-				  <li><a class="dropdown-item" href="#"><i class="bi bi-cloud-plus"></i> Updating</a></li>
+				  <li><a class="dropdown-item" href="{{ route('plenty-articles.edit',1)}}"><i class="bi bi-activity"></i> update</a></li>
+				  <li><a class="dropdown-item" href="{{ url('update-sales-price')}}"><i class="bi bi-cloud-plus"></i> Update Price</a></li>
+				  <li><a class="dropdown-item" href="{{ url('update-sales-price')}}"><i class="bi bi-cloud-plus"></i> Update Stock</a></li>
 			    </ul>
 			</li>
 			<li class="nav-item dropdown">
@@ -84,7 +85,7 @@
 			    <ul class="dropdown-menu dropdown-menu-end">
 				  <li><a class="dropdown-item" href="{{ route('trenz-articles.index')}}"><i class="bi bi-activity"></i> Index</a></li>
 				  <li><a class="dropdown-item" href="{{ route('trenz-articles.create')}}"><i class="bi bi-activity"></i> Create</a></li>
-				  <li><a class="dropdown-item" href="{{ route('trenz-articles.update')}}"><i class="bi bi-activity"></i> Update</a></li>
+				  <li><a class="dropdown-item" href="{{ route('trenz-articles.edit',1)}}"><i class="bi bi-activity"></i> Update</a></li>
 				  <li><a class="dropdown-item" href="#"><i class="bi bi-cloud-plus"></i> Delete</a></li>
 			    </ul>
 			</li>

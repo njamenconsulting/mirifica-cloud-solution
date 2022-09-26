@@ -79,14 +79,12 @@ class PlentyarticleController extends Controller
      */
     public function store(Array $data)
     {
+    
         foreach ($data as $key => $value) {
-            //   $variation['itemId']  $variation['isActive']   $variation['externalId']
-            //$variation['mainWarehouseId']
-            //dd($value['id'], $value['itemId'],$value['externalId']);
-            $query = DB::insert('insert into plentyarticles (itemId, variationId,externalId, price, priceGross, stock)
-                                    values (?, ?, ?, ?, ?, ?)', [$value['id'], $value['itemId'],$value['externalId'],'nan','nan','nan']);
+
+            $query = DB::insert('insert into plentyarticles (itemId, variationId, externalId, warehouseVariationId, price, priceGross, stock, created_at)
+                                    values (?, ?, ?, ?, ?, ?, ?, ?)', [$value['id'], $value['itemId'],$value['externalId'],$value['warehouseVariationId'],'nan','nan','nan',date("Y-m-d H:i:s")]);
         }
-        dd($query);
     }
 
     /**
@@ -95,34 +93,49 @@ class PlentyarticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $articles = DB::select('select * from trenzarticles'); 
+
+        foreach ($articles as $article) {
+            
+            $variation = DB::select('select * from plentyarticles where externalId = :id', ['id' => $article->productId]);
+       
+            if($variation)
+            { 
+                if($article->price != $variation[0]->price ){
+
+                    $query = $this->update($article,$variation[0]->externalId);#   
+                    if($query)  $report['itemUpdated'][$article->productId] = $article;
+                }
+            }
+            /*
+            else{
+
+                $query = $this->store( (array) $article);
+                if($query)  $report['itemAdded'][$article->productId] = $article;
+            }
+            */
+   
+        }
+
+        return view('plentymarkets.index') ->with('variations', $report);
     }
 
     /**
-     * Update the specified resource in storage.
+     * update
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  mixed $data
+     * @param  mixed $id
+     * @return int
      */
-    public function update(Request $request, $id)
+    public function update($data, $id):int
     {
-        //
-    }
+        //on met à jour la table plentymarkets
+        $affected = DB::update('update plentyarticles set price = '.$data->price.',updated_at'.date("Y-m-d H:i:s").' where externalId = ?',[$id]);
 
+        return $affected;
+    }
     /**
      * Remove the specified resource from storage.
      *

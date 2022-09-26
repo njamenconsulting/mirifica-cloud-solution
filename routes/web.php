@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Articles\TrenzarticleController;
 use App\Http\Controllers\Articles\PlentyarticleController;
+use App\Http\Controllers\Articles\PlentySystemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,10 +26,15 @@ Route::get('/', function () {
 
 
 Route::resource('trenz-articles', TrenzarticleController::class)->only([
-    'index', 'create','store', 'update', 'show', 'destroy'
+    'index', 'create','store', 'edit', 'update', 'destroy'
 ]);
 Route::resource('plenty-articles', PlentyarticleController::class)->only([
-    'index', 'create','store', 'update', 'show', 'destroy'
+    'index', 'create','store', 'edit', 'update', 'destroy'
 ]);
+Route::controller(PlentySystemController::class)->group(function () {
+    Route::get('update-sales-price', 'updateSalePrice');
+    Route::get('update-stock', 'updateStock');
+});
+
 
 
