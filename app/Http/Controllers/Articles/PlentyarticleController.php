@@ -13,7 +13,7 @@ class PlentyarticleController extends Controller
     public $_plentyApiService;
     private $_plentyModel;
 
-    function __construct(plentyApiService $plentyApiService,Plentyarticle $plentyModel)
+    function __construct(PlentyApiService $plentyApiService,Plentyarticle $plentyModel)
     {
         $this -> _plentyApiService = $plentyApiService;
         $this -> _plentyModel = $plentyModel;
@@ -25,7 +25,9 @@ class PlentyarticleController extends Controller
      */
     public function index()
     {
-        return view('plentyarticles.plenty_dashboard');
+        $variations = DB::select('SELECT * FROM plentyarticles');
+
+        return view('plentyarticles.plenty_dashboard', ['data' => $variations]);
     }
 
     /**
@@ -37,38 +39,37 @@ class PlentyarticleController extends Controller
     {
         $start = microtime(true); 
         $memoryBefore = memory_get_usage(true);
-        //
-        $i=1;
-        $isLastPage = false;
-        //
-        while (!$isLastPage) {
 
-            $pageOfVariation = $this -> _plentyApiService ->getAllVariations($i);
+        $variations = $this -> _plentyApiService ->getAllVariations(1);
 
-            $allVariations[$i] = $pageOfVariation;
-            
-            if($i!=1)
-            {
-                $allVariations[$i]= array_merge($allVariations[$i-1],$pageOfVariation) ;                
-            }
+        $allVariations = array();
+        $allVariations[0]= $variations ;
+        $totalPage = $variations['lastPageNumber'];
+        
+        for ($i=1; $i < $totalPage; $i++) { 
+     
+            $pageNumber=$i+1;
 
-            $isLastPage = $pageOfVariation['isLastPage'];
+            $variations = $this -> _plentyApiService ->getAllVariations($pageNumber);
+      
+            $allVariations[$i]= array_merge($allVariations[$i-1],$variations) ;                    
 
-            echo $i."<br>";
-            $i++;
         }
+
+        foreach ($allVariations as $page => $variations) {
+
+            $result = $this->store($variations['entries']);
+        }
+
         $end = microtime(true); 
         $memoryAfter = memory_get_usage(true);
         $during = ($end - $start);
-        $consuming = ($memoryAfter - $memoryBefore);
-        echo " Execution time: ".$during." sec   <br>"; 
+        $consuming = ($memoryAfter - $memoryBefore); 
         $consuming = $consuming/1000000;
-        echo " Memory consumtion: ".$consuming." Mo   <br>";
-       
-        foreach ($allVariations as $page => $variations) {
-           // dd($allVariations);
-            $this->store($variations['entries']);
-        }
+
+        $variations = DB::select('SELECT * FROM plentyarticles WHERE externalId IS NOT NULL');
+
+        return view("plentyarticles.plenty_create", ['data'=>count($variations),'time'=>$during ,'memory'=>$consuming]);
     }
 
     /**
@@ -79,12 +80,19 @@ class PlentyarticleController extends Controller
      */
     public function store(Array $data)
     {
-    
+   
         foreach ($data as $key => $value) {
 
-            $query = DB::insert('insert into plentyarticles (itemId, variationId, externalId, warehouseVariationId, price, priceGross, stock, created_at)
-                                    values (?, ?, ?, ?, ?, ?, ?, ?)', [$value['id'], $value['itemId'],$value['externalId'],$value['warehouseVariationId'],'nan','nan','nan',date("Y-m-d H:i:s")]);
+            try {
+                $query = DB::insert('insert into plentyarticles (itemId, variationId, externalId, warehouseVariationId, price, priceGross, stock, created_at)
+                values (?, ?, ?, ?, ?, ?, ?, ?)', [$value['itemId'], $value['id'],$value['externalId'],$value['warehouseVariationId'],'nan','nan','nan',date("Y-m-d H:i:s")]);
+
+            } catch (\Throwable $th) {
+                throw $th;
+            }
         }
+   
+        return $query;
     }
 
     /**
@@ -106,7 +114,6 @@ class PlentyarticleController extends Controller
                 if($article->price != $variation[0]->price ){
 
                     $query = $this->update($article,$variation[0]->externalId);#   
-                    if($query)  $report['itemUpdated'][$article->productId] = $article;
                 }
             }
             /*
@@ -118,8 +125,8 @@ class PlentyarticleController extends Controller
             */
    
         }
-
-        return view('plentymarkets.index') ->with('variations', $report);
+        $variations = DB::select('SELECT * FROM variation_to_update_prices');
+        return view('plentyarticles.plenty_update', ['data' => count($report)]);
     }
 
     /**
@@ -131,8 +138,21 @@ class PlentyarticleController extends Controller
      */
     public function update($data, $id):int
     {
+        $priceGross = $data->price*config('plentymarket.VAT') + $data->price;
         //on met à jour la table plentymarkets
-        $affected = DB::update('update plentyarticles set price = '.$data->price.',updated_at'.date("Y-m-d H:i:s").' where externalId = ?',[$id]);
+
+        $affected = DB::update('UPDATE plentyarticles 
+                                SET price = ? , priceGross = ?, updated_at = ? 
+                                WHERE externalId  = ?', [$data->price , $priceGross,date("Y-m-d H:i:s"),$id]
+                            );
+    
+
+        if($affected) $updatedVariation  = DB::select('select * from plentyarticles where externalId = :id', ['id' => $data->productId]);
+
+        $query = DB::insert('INSERT INTO variation_to_update_prices (itemId, variationId, externalId, price, created_at)
+                            VALUES (?, ?, ?, ?, ?)',  
+                            [$updatedVariation[0]->itemId , $updatedVariation[0]->variationId , $updatedVariation[0]->externalId , $updatedVariation[0]->price,date("Y-m-d H:i:s")]
+                        );
 
         return $affected;
     }

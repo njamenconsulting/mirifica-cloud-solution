@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlentyarticlesTable extends Migration
+class CreateVariationToUpdateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreatePlentyarticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('plentyarticles', function (Blueprint $table) {
+        Schema::create('variation_to_update_stocks', function (Blueprint $table) {
             $table->id();
             $table->string('itemId');
-            $table->string('variationId')->unique();
+            $table->string('variationId');
             $table->string('externalId');
-            $table->string('price')->nullable();
-            $table->string('priceGross')->nullable();
-            $table->string('stock')->nullable();
-            $table->string('warehouseVariationId')->nullable();
+            $table->string('stock');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreatePlentyarticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plentyarticles');
+        Schema::dropIfExists('variation_to_update_stocks');
     }
 }

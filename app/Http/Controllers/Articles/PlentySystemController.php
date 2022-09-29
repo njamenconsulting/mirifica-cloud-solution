@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\Plentymarket\PlentyApiService;
 use App\Services\CurlService;
 use App\Services\TokenService;
 use Illuminate\Support\Facades\DB;
@@ -19,9 +20,9 @@ class PlentySystemController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(plentyApiService $plentyApiService)
     {
-
+      $this -> _plentyApiService = $plentyApiService;
       $this->_url = config('plentymarket.BASE_URL');
 
       $this->_vat = config('plentymarket.VAT');
@@ -31,41 +32,6 @@ class PlentySystemController extends Controller
                           'Authorization: Bearer '.(new TokenService())->getAccessToken()
                          ];
     }
-
-    public function getAllItems()
-    {
-        $url = $this->_url."/rest/items";
-        $method = "GET";      
-        $items = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
-        
-        return $items;
-    }
-    public function getAllVariations(int $pageNumber)
-    {
-        $url = $this->_url."/rest/items/variations?page=".$pageNumber;
-        $method = "GET";      
-        $variations = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
-        
-        return $variations;
-    }  
-    /**
-     * getExternalId
-     *
-     * @param  mixed $data
-     * @return array
-     */
-    public function getExternalId($itemId, $variationId)
-    {
-      
-        $url = $this->_url."/rest/items/".$itemId."/variations/".$variationId;
-        $method = "GET";      
-        $variation = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
-
-        //Return extracted externalId value
-       // return array('externalId' => $variation['externalId']);
-        return $variation['externalId'];
-    }
-        
     /**
      * updateSalePrice
      *
@@ -74,15 +40,42 @@ class PlentySystemController extends Controller
      */
     public function updateSalePrice():array
     {
-        $variations = DB::select('select * from plentyarticles where externalId IS NOT NULL'); 
 
+        $variations = DB::select('SELECT * FROM item_to_updates');
+        $fields =array();
+        for ($i=0; $i < count($variations) ; $i++) { 
+    
+                //$priceGross = $variations[$i]->price + $variations[$i]->price * $this->_vat;
+                    
+            $field = [
+                'variationId' => $variations[$i]->variationId,
+                'salesPriceId' => 1,
+                'price' => 2
+            ];
+       
+            $fields[0] = $field;
+            if($i!=0) $fields[$i] = array_merge($fields[$i-1], $field);
+  
+        }
+        
+dd(json_encode($fields));
         foreach ($variations as $key => $value) {
+            
             # price Gross calculation by adding VAT of 19%
             if(is_numeric($value->price))
-            {            
+            {    
+                     
                 $priceGross = $value->price + $value->price * $this->_vat;
 
                 $url = $this->_url."/rest/items/variations/variation_sales_prices";
+    #Updates up to 50 prices of variations. The ID of the variation, the ID of the sales price and a price must be specified.
+#The unique ID of the variation
+#The unique ID of the sales price
+#The price of the variation saved for this sales price
+
+/*Updates up to 50 variations. The ID of the variation must be specified.
+/rest/items/variations*/
+
 
                 $fields = [
                     [
@@ -93,7 +86,7 @@ class PlentySystemController extends Controller
                 ];
                 
                 $method = "PUT";
-        
+                //dd($method, $url, $this-> _header,$fields);   
                 $update = CurlService::makeHttpRequest($method, $url, $this-> _header,$fields); 
             }
 

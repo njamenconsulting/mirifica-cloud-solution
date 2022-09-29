@@ -1,32 +1,40 @@
-<!-- resources/views/index.blade.php -->
- 
 @extends('layouts.app')
 
 
-    @section('title', 'Plentymarket')
+    @section('title', 'Plenty')
     
     
     @section('content')
 
 
-        <div class="bg-light m-2 p-2">
-            <h2 class="p-2 text-muted"> Plentymarket Updating Report</h2>
+        <div class="bg-light mt-3">
+            <h2 class="p-2 text-muted"> Plenty Local Storage Update Report</h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Plentymarket</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Report</li>
+                    <li class="breadcrumb-item"><a href="#">Plenty</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Update</li>
                 </ol>
             </nav>
 
             <div class="container-md">
 
-                <h4 class="text-warning">Description</h4>
+                <h4 class="text-warning">Update status</h4>
 
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Well done!</h4>
+                    <p> Plenty local storage has been successfully updated. You can see detail of execution below:</p>
+                        <li class="list-group-item">Number of product(s) updated : {{ count($variations) }} </li>
+                    <hr>
+                </div>
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <div>Now you must updating PM system</div>
+                </div>
                 <table class="table table-striped table-hover table-bordered border-warning">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col"> External ID </th>
+                            <th scope="col"> Extenrnal ID </th>
                             <th scope="col"> Stock </th>
                             <th scope="col"> Price </th>
                         </tr>
@@ -45,7 +53,6 @@
                     </tbody>
                 </table>
            </div>
-    
   
         </div>
 

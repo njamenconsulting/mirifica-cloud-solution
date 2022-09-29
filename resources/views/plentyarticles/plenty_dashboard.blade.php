@@ -1,20 +1,18 @@
-<!-- resources/views/index.blade.php -->
- 
 @extends('layouts.app')
 
 
-    @section('title', 'Trenz')
+    @section('title', 'Plentymarket')
     
     
     @section('content')
 
 
-        <div class="bg-light mt-5">
-            <h2 class="p-2 text-muted"> Trenz initialisation Report</h2>
+        <div class="bg-light mt-3">
+            <h2 class="p-2 text-muted"> PM Local Storage Initialization Report</h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Trenz</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    <li class="breadcrumb-item"><a href="#">Plentymarket</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Initialization</li>
                 </ol>
             </nav>
 
@@ -32,18 +30,18 @@
                     <div class="col-sm-6">
                         <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Initilisation step</h5>
+                            <h5 class="card-title"> Initialization details:</h5>
                             <ul class="list-group m-2">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Date
+                                    Date:
                                     <span class="badge bg-primary rounded-pill"> {{ $data[0]->created_at}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Number of variation(s) created
+                                    Number of variation(s) created:
                                     <span class="badge bg-primary rounded-pill"> {{ count($data)}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Execution time
+                                    Execution time:
                                     <span class="badge bg-danger rounded-pill"> {{ 3 }}</span>
                                 </li>
                             </ul> 
@@ -53,18 +51,18 @@
                     <div class="col-sm-6">
                         <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Last Local update</h5>
+                            <h5 class="card-title">Last update Report:</h5>
                             <ul class="list-group m-2">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Date
                                     <span class="badge bg-danger rounded-pill">14</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Number of variation(s) affected
+                                    Number of variation(s) affected:
                                     <span class="badge bg-danger rounded-pill">2</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    A third list item
+                                    A third list item:
                                     <span class="badge bg-danger rounded-pill">1</span>
                                 </li>
                             </ul>                         

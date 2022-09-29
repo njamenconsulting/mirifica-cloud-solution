@@ -38,9 +38,54 @@ Class PlentyApiService
         
         return $items;
     }
+        
+    /**
+     * getVariation
+     *
+     * @param  mixed $itemId
+     * @param  mixed $variationId
+     * @return void
+     */
+    public function getVariation(int $itemId, int $variationId)
+    {
+        $url = $this->_url."/rest/items/".$itemId."/variations/".$variationId;
+        $method = "GET";      
+        $variation = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+        
+        return $variation;
+    }     
+    public function getItem()
+    {
+
+        $url = $this->_url."/rest/items/variations?manufacturerId=15";
+        
+        $method = "GET";      
+        $variation = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+        
+        return $variation;
+    }   
+    /**
+     * getManufacturers
+     *
+     * @return void
+     */
+    public function getManufacturers()
+    {
+        $url = $this->_url."/rest/items/manufacturers";
+        $method = "GET";      
+        $manufacturers = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
+        
+        return $manufacturers;
+    }    
+    /**
+     * getAllVariations
+     *
+     * @param  mixed $pageNumber
+     * @return void
+     */
     public function getAllVariations(int $pageNumber)
     {
-        $url = $this->_url."/rest/items/variations?page=".$pageNumber;
+        $url = $this->_url."/rest/items/variations?categoryId=29&page=".$pageNumber;
         $method = "GET";      
         $variations = CurlService::makeHttpRequest($method, $url,$this-> _header,[]);
         
