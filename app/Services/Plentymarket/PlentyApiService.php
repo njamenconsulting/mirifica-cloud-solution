@@ -115,23 +115,13 @@ Class PlentyApiService
      * @param  mixed $data
      * @return array
      */
-    public function updateSalePrice():array
+    public function updateSalePrice($data):array
     {
-        $variations = DB::select('select * from plentyarticles where externalId !=NULL'); 
-dd($variations);
-        # price Gross calculation by adding VAT of 19%
-        $priceGross = $data['price'] + $data['price'] * $this->_vat;
 
         $url = $this->_url."/rest/items/variations/variation_sales_prices";
 
-        $fields = [
-              [
-                'variationId' => $data['variationId'],
-                'salesPriceId' => $data['salePriceId'],
-                'price' => $priceGross
-              ]
-        ];
-        
+        $fields = $data;
+
         $method = "PUT";
 
         $update = CurlService::makeHttpRequest($method, $url, $this-> _header,$fields);  

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\Plentymarket\PlentyApiService;
 use App\Services\CurlService;
 use App\Services\TokenService;
+use App\Helpers\ArrayToCsvHelper;
 use Illuminate\Support\Facades\DB;
 
 class PlentySystemController extends Controller
@@ -23,6 +24,7 @@ class PlentySystemController extends Controller
     public function __construct(plentyApiService $plentyApiService)
     {
       $this -> _plentyApiService = $plentyApiService;
+
       $this->_url = config('plentymarket.BASE_URL');
 
       $this->_vat = config('plentymarket.VAT');
@@ -38,64 +40,37 @@ class PlentySystemController extends Controller
      * @param  mixed $data
      * @return array
      */
-    public function updateSalePrice():array
+    public function updateSalePrice():bool
     {
 
-        $variations = DB::select('SELECT * FROM item_to_updates');
+        $variations = DB::select('SELECT * FROM variation_to_update_prices');
         $fields =array();
-        for ($i=0; $i < count($variations) ; $i++) { 
-    
-                //$priceGross = $variations[$i]->price + $variations[$i]->price * $this->_vat;
-                    
-            $field = [
-                'variationId' => $variations[$i]->variationId,
-                'salesPriceId' => 1,
-                'price' => 2
-            ];
-       
-            $fields[0] = $field;
-            if($i!=0) $fields[$i] = array_merge($fields[$i-1], $field);
-  
-        }
-        
-dd(json_encode($fields));
-        foreach ($variations as $key => $value) {
-            
-            # price Gross calculation by adding VAT of 19%
-            if(is_numeric($value->price))
-            {    
-                     
-                $priceGross = $value->price + $value->price * $this->_vat;
 
-                $url = $this->_url."/rest/items/variations/variation_sales_prices";
-    #Updates up to 50 prices of variations. The ID of the variation, the ID of the sales price and a price must be specified.
-#The unique ID of the variation
-#The unique ID of the sales price
-#The price of the variation saved for this sales price
+        $bulkIteration = ceil(count($variations)/50);
 
-/*Updates up to 50 variations. The ID of the variation must be specified.
-/rest/items/variations*/
+        for ($i=0; $i < $bulkIteration; $i++) { 
 
-
-                $fields = [
-                    [
-                        'variationId' => $value->variationId,
-                        'salesPriceId' => 1,
-                        'price' => $priceGross
-                    ]
+            for ($j=0; $j < 50; $j++) { 
+                # price Gross calculation by adding VAT of 19%
+                $priceGross = $variations[$j]->price + $variations[$j]->price * $this->_vat;
+                        
+                $field = [
+                    'variationId' => $variations[$j]->variationId,
+                    'salesPriceId' => 1,
+                    'price' => round($priceGross,2)
                 ];
-                
-                $method = "PUT";
-                //dd($method, $url, $this-> _header,$fields);   
-                $update = CurlService::makeHttpRequest($method, $url, $this-> _header,$fields); 
+        
+                $fields[0] = $field;
+                if($j!=0) $fields[$j] = array_merge($fields[$j-1], $field);
             }
 
+            $this -> _plentyApiService ->updateSalePrice($fields);
+
+            ArrayToCsvHelper::createCsvFileFromArray("price_update_report",$fields,false,";");
         }
-        dd($update);
-        return $update; 
-
+        
+        return true;
     }
-
      
      /**
       * updateStock

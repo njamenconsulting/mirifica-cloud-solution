@@ -25,8 +25,8 @@
                     <p> Plenty local storage has been successfully created. You can see detail of execution below:</p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Number of product(s) created : {{ $data}} </li>
-                        <li class="list-group-item">Execution time: {{ $time}}</li>
-                        <li class="list-group-item">Amount memory consumption: {{ $memory}}</li>
+                        <li class="list-group-item">Execution time: {{ $time}} s</li>
+                        <li class="list-group-item">Amount memory consumption: {{ $memory}} Mo</li>
                     </ul>
                     <hr>
                     <p class="mb-0">Now you must continue with initialization step</p>

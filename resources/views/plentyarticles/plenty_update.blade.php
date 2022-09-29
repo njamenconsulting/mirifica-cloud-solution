@@ -24,12 +24,10 @@
                     <h4 class="alert-heading">Well done!</h4>
                     <p> Plenty local storage has been successfully updated. You can see detail of execution below:</p>
                         <li class="list-group-item">Number of product(s) updated : {{ count($variations) }} </li>
-                    <hr>
+                        <hr>
+                    <em class="text-danger">Now you must updating PM system</em>
                 </div>
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                    <div>Now you must updating PM system</div>
-                </div>
+
                 <table class="table table-striped table-hover table-bordered border-warning">
                     <thead>
                         <tr>

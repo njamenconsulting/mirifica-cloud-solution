@@ -104,6 +104,7 @@ class PlentyarticleController extends Controller
     public function edit($id)
     {
         $articles = DB::select('select * from trenzarticles'); 
+      
 
         foreach ($articles as $article) {
             
@@ -111,6 +112,7 @@ class PlentyarticleController extends Controller
        
             if($variation)
             { 
+                dd($article->price, $variation[0]->price);
                 if($article->price != $variation[0]->price ){
 
                     $query = $this->update($article,$variation[0]->externalId);#   
@@ -126,7 +128,7 @@ class PlentyarticleController extends Controller
    
         }
         $variations = DB::select('SELECT * FROM variation_to_update_prices');
-        return view('plentyarticles.plenty_update', ['data' => count($report)]);
+        return view('plentyarticles.plenty_update', ['variations' => $variations]);
     }
 
     /**
@@ -154,7 +156,7 @@ class PlentyarticleController extends Controller
                             [$updatedVariation[0]->itemId , $updatedVariation[0]->variationId , $updatedVariation[0]->externalId , $updatedVariation[0]->price,date("Y-m-d H:i:s")]
                         );
 
-        return $affected;
+        return true;
     }
     /**
      * Remove the specified resource from storage.
