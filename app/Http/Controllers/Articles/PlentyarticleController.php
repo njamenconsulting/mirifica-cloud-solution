@@ -112,10 +112,27 @@ class PlentyarticleController extends Controller
        
             if($variation)
             { 
-                dd($article->price, $variation[0]->price);
+
                 if($article->price != $variation[0]->price ){
 
                     $query = $this->update($article,$variation[0]->externalId);#   
+                }
+
+                if($article->stock != $variation[0]->stock){
+
+                    $affected = DB::update('UPDATE plentyarticles 
+                                            SET stock = ? , updated_at = ? 
+                                            WHERE externalId  = ?', [$article->stock, date("Y-m-d H:i:s"), $article->productId]
+                                        );
+
+             
+                if($affected) $updatedVariation  = DB::select('select * from plentyarticles where externalId = :id', ['id' => $article->productId]);
+
+                $query = DB::insert('INSERT INTO variation_to_update_stocks (itemId, variationId, externalId, stock, created_at)
+                                VALUES (?, ?, ?, ?, ?)',  
+                                [$updatedVariation[0]->itemId , $updatedVariation[0]->variationId , $updatedVariation[0]->externalId , $updatedVariation[0]->stock,date("Y-m-d H:i:s")]
+                            );
+                     
                 }
             }
             /*

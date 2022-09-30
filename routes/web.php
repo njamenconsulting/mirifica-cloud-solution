@@ -33,7 +33,7 @@ Route::resource('plenty-articles', PlentyarticleController::class)->only([
 ]);
 Route::controller(PlentySystemController::class)->group(function () {
     Route::get('update-sales-price', 'updateSalePrice');
-    Route::get('update-stock', 'updateStock');
+    Route::get('update-stock', 'updateBulkStock');
 });
 
 

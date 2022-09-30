@@ -68,10 +68,39 @@ class PlentySystemController extends Controller
 
             ArrayToCsvHelper::createCsvFileFromArray("price_update_report",$fields,false,";");
         }
-        
+
         return true;
     }
-     
+    public function updateBulkStock()
+    {
+
+        $variations = DB::select('SELECT * FROM variation_to_update_stocks');
+        $fields =array();
+
+        $bulkIteration = ceil(count($variations)/50);
+
+        for ($i=0; $i < $bulkIteration; $i++) { 
+
+            for ($j=0; $j < 50; $j++) { 
+                        
+                $field = [
+                    'quantity' => $variations[$j]->stock,
+                    'warehouseId' => 1,
+                    'storageLocationId' => 0,
+                    'reasonId' => 301
+                ];     
+
+                $fields[0] = $field;
+                if($j!=0) $fields[$j] = array_merge($fields[$j-1], $field);
+            }
+
+            $this -> _plentyApiService ->updateBulkStock($fields);
+
+            ArrayToCsvHelper::createCsvFileFromArray("stock_update_report",$fields,false,";");
+        }
+
+        return true;
+    }    
      /**
       * updateStock
       *

@@ -77,7 +77,7 @@
 				  <li><a class="dropdown-item" href="{{ route('plenty-articles.create')}}"><i class="bi bi-activity"></i> Create</a></li>
 				  <li><a class="dropdown-item" href="{{ route('plenty-articles.edit',1)}}"><i class="bi bi-activity"></i> update</a></li>
 				  <li><a class="dropdown-item" href="{{ url('update-sales-price')}}"><i class="bi bi-cloud-plus"></i> Update Price</a></li>
-				  <li><a class="dropdown-item" href="{{ url('update-sales-price')}}"><i class="bi bi-cloud-plus"></i> Update Stock</a></li>
+				  <li><a class="dropdown-item" href="{{ url('update-stock')}}"><i class="bi bi-cloud-plus"></i> Update Stock</a></li>
 			    </ul>
 			</li>
 			<li class="nav-item dropdown">

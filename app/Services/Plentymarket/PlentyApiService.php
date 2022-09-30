@@ -138,7 +138,7 @@ Class PlentyApiService
       */
      public function updateStock($data):array
      {
-
+        ///rest/stockmanagement/warehouses/1/stock/correction
         $url = $this->_url."/rest/items/". $data['itemId'] ."/variations/". $data['variationId'] ."/stock/correction";
         
         $fields = [
@@ -147,6 +147,17 @@ Class PlentyApiService
             'storageLocationId' => 0,
             'reasonId' => 301
         ];
+        
+        $method = "PUT";
+
+        $update = CurlService::makeHttpRequest($method, $url,$this-> _header,$fields); 
+
+        return $update;
+     }
+
+     public function updateBulkStock(Array $fields)
+     {
+        $url = $this->_url."rest/stockmanagement/warehouses/1/stock/correction";
         
         $method = "PUT";
 
